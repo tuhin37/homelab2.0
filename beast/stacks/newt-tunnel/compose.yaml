@@ -1,0 +1,9 @@
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://gw.dragnet.in
+      - NEWT_ID=7xnk6444exukgom
+      - NEWT_SECRET=98kraab02wvvs01ychqrhznvu9tniupy2vt8pcg2t4obmv0n

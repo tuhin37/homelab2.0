@@ -1,0 +1,49 @@
+version: "3.3"
+services:
+  n8n:
+    stdin_open: true
+    tty: true
+    container_name: n8n
+    ports:
+      - 5678:5678
+    environment:
+      - WEBHOOK_URL=https://n8n-local.dragnet.in/
+      - VUE_APP_URL_BASE_API=https://n8n-local.dragnet.in/
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_DATABASE=n8n_db
+      - DB_POSTGRESDB_HOST=db
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_USER=n8n-admin
+      - DB_POSTGRESDB_SCHEMA=public
+      - DB_POSTGRESDB_PASSWORD=bbmkpuGQcYMpfh9Jqdiws8hAoKx4Sx7QCz6ivnVE
+      - N8N_SECURE_COOKIE=false
+      - NODE_FUNCTION_ALLOW_BUILTIN=*
+      - NODE_FUNCTION_ALLOW_EXTERNAL=*
+    volumes:
+      - ./n8n-data:/home/node/.n8n
+      - /mnt/memfs:/mnt/memfs
+      #- /mnt/nas-media:/mnt/nas-media
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - db
+    image: fidays/n8n:1.30.1.1
+    restart: unless-stopped
+    networks:
+      - frontend
+      - backend
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: n8n_db
+      POSTGRES_USER: n8n-admin
+      POSTGRES_PASSWORD: bbmkpuGQcYMpfh9Jqdiws8hAoKx4Sx7QCz6ivnVE
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - backend
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
