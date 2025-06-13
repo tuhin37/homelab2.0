@@ -10,7 +10,7 @@ GIT_ROOT="/opt/homelab2.0"
 
 # Rsync with delete and include filter
 echo "[+] Syncing files..."
-rsync -av --delete --include-from="$INCLUDE_FILE" "$SRC_DIR" "$DEST_DIR"
+/usr/bin/rsync -av --delete --include-from="$INCLUDE_FILE" "$SRC_DIR" "$DEST_DIR"
 
 # Change to git repo root
 cd "$GIT_ROOT"
