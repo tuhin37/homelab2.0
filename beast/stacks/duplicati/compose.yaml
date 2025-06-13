@@ -1,4 +1,3 @@
-version: "2.1"
 networks:
   frontend:
     external: true
@@ -16,7 +15,7 @@ services:
       - SETTINGS_ENCRYPTION_KEY=JkmTWnr6Qv6UfLwMlDka5EDCtwPbAp73
     volumes:
       - ./config:/config
-      - /mnt/duplicati-backups:/backups
+      - /mnt/unified/media/duplicati:/backups
       - /opt/stacks:/source/docker-stacks
     ports:
       - 8200:8200
