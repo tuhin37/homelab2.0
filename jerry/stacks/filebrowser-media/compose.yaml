@@ -1,0 +1,19 @@
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:s6
+    container_name: filebrowser
+    ports:
+      - 8082:80
+    environment:
+      PUID: 0
+      PGID: 0
+    volumes:
+      - /mnt/unified/media:/srv
+      - ./data:/database
+      - ./settings.json:/config/settings.json
+    restart: unless-stopped
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true

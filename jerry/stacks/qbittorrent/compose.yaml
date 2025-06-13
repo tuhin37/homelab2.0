@@ -1,0 +1,27 @@
+services:
+  qbittorrent:
+    image: linuxserver/qbittorrent:5.1.0
+    container_name: qbittorrent
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Asia/Calcutta
+      - WEBUI_PORT=8081
+      - TORRENTING_PORT=6881
+    volumes:
+      - ./data:/config
+      - /mnt/unified/media/torrents/qbt-ongoing:/qbt-ongoing
+      - /mnt/unified/media/torrents/qbt-done:/qbt-done
+      - /mnt/unified/media/torrents/qbt-music:/qbt-music
+    ports:
+      - 8081:8081
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true

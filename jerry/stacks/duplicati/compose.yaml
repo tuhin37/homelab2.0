@@ -1,0 +1,24 @@
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+services:
+  duplicati:
+    image: ghcr.io/linuxserver/duplicati
+    container_name: duplicati
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Asia/Calcutta
+      - CLI_ARGS= #optional
+      - SETTINGS_ENCRYPTION_KEY=JkmTWnr6Qv6UfLwMlDka5EDCtwPbAp73
+    volumes:
+      - ./config:/config
+      - /mnt/unified/media/duplicati:/backups
+      - /opt/stacks:/source/docker-stacks
+    ports:
+      - 8200:8200
+    restart: unless-stopped
+    networks:
+      - frontend

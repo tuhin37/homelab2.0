@@ -1,0 +1,17 @@
+services:
+  beets:
+    image: lscr.io/linuxserver/beets:latest
+    container_name: beets
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./config:/config
+      - /mnt/unified/media/music:/music
+      - /mnt/unified/media/torrents/qbt-music:/music-stage
+      - ./ingest:/downloads
+    ports:
+      - 8337:8337
+    restart: unless-stopped
+networks: {}

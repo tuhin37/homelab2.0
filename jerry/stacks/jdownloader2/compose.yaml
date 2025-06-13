@@ -1,0 +1,27 @@
+version: "3"
+services:
+  jdownloader-2:
+    image: jlesage/jdownloader-2
+    container_name: jdownloader2
+    restart: unless-stopped
+    # Expose ports:
+    #   5800 → Web-based GUI (HTTP/VNC-over-Web)
+    #   5900 → Native VNC port
+    ports:
+      - 5800:5800
+      - 5900:5900
+    # Map host directories under /mnt/vinmount for persistence
+    volumes:
+      - ./config:/config:rw # JDownloader config, logs, etc. :contentReference[oaicite:3]{index=3}
+      - /mnt/unified/media/torrents/jdownloader2/:/output:rw # Downloaded files :contentReference[oaicite:4]{index=4}
+    environment:
+      - USER_ID=1000 # Run as host user ID 1000 :contentReference[oaicite:5]{index=5}
+      - GROUP_ID=1000 # Run as host group ID 1000 :contentReference[oaicite:6]{index=6}
+      - TZ=Asia/Kolkata # Container timezone set to IST (UTC+5:30) :contentReference[oaicite:7]{index=7}
+      # - WEB_AUTHENTICATION=1  # Enable web authentication (optional)
+      # - WEB_AUTHENTICATION_PASSWORD=yourpassword  # Set a password for web GUI (optional) :contentReference[oaicite:8]{index=8}
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true

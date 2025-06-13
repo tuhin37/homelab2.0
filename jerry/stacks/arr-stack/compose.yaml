@@ -1,0 +1,101 @@
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./sonarr:/config
+      - /mnt/unified/media/series:/tv
+      - /mnt/unified/media/torrents/sonarr:/downloads
+    restart: unless-stopped
+    networks:
+      - frontend
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    ports:
+      - 7878:7878
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./radarr:/config
+      - /mnt/unified/media/movies:/movies
+      - /mnt/unified/media/torrents/radarr:/downloads
+    restart: unless-stopped
+    networks:
+      - frontend
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./lidarr:/config
+      - /mnt/unified/media/music/A. R. Rahman:/music2
+      - /mnt/unified/media/music:/music-beets #optional
+      - /mnt/unified/media/torrents/lidarr:/music-lidarr
+    ports:
+      - 8686:8686
+    restart: unless-stopped
+    networks:
+      - frontend
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./readarr/data:/config
+      - /mnt/unified/media/ebooks:/books #optional
+      - /mnt/unified/media/torrents/readarr:/downloads #optional
+    ports:
+      - 8787:8787
+    restart: unless-stopped
+    networks:
+      - frontend
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./bazarr:/config
+      - /mnt/unified/media/movies:/movies #optional
+      - /mnt/unified/media/series:/tv #optional
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+    networks:
+      - frontend
+  mylar3:
+    image: lscr.io/linuxserver/mylar3:latest
+    container_name: mylar3
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./mylar:/config
+      - /mnt/unified/media/comic-books:/comics
+      - /mnt/unified/media/torrents/mylarr:/downloads
+    ports:
+      - 8090:8090
+    restart: unless-stopped
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true

@@ -1,0 +1,17 @@
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    user: 0:0 # should be owner of volumes
+    ports:
+      - 4533:4533
+    restart: unless-stopped
+    environment:
+      - ND_LOGLEVEL=debug
+    volumes:
+      - ./data:/data
+      - /mnt/unified/media/music:/music:ro
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true

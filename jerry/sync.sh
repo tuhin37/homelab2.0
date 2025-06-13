@@ -4,8 +4,8 @@ set -e
 
 # Constants
 SRC_DIR="/opt/stacks/"
-DEST_DIR="/opt/homelab2.0/beast/stacks/"
-INCLUDE_FILE="/opt/homelab2.0/beast/rsync-include-file.txt"
+DEST_DIR="/opt/homelab2.0/jerry/stacks/"
+INCLUDE_FILE="/opt/homelab2.0/jerry/rsync-include-file.txt"
 GIT_ROOT="/opt/homelab2.0"
 LOKI_URL="http://10.0.0.25:3100/loki/api/v1/push"
 LABELS='{ "job": "homelab2.0-sync-jerry" }'
@@ -25,6 +25,7 @@ log "[+] [$IST_TIME] Starting sync..."
 RSYNC_OUTPUT=$(/usr/bin/rsync -av --delete --include-from="$INCLUDE_FILE" "$SRC_DIR" "$DEST_DIR" 2>&1)
 log "[+] Rsync complete."
 log "$RSYNC_OUTPUT"
+
 
 # Git operations
 cd "$GIT_ROOT"
