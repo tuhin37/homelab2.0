@@ -1,0 +1,18 @@
+version: "3"
+networks:
+  backend:
+    external: true
+  frontend:
+    external: true
+services:
+  promtail:
+    image: grafana/promtail:3.0.0
+    command: --config.file=/mnt/config/promtail-config.yaml
+    volumes:
+      - ./config:/mnt/config
+      - /var/log:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers
+      - /var/run/docker.sock:/var/run/docker.sock # Add this line to access Docker metadata
+    restart: unless-stopped
+    networks:
+      - backend

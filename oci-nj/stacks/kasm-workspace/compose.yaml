@@ -1,0 +1,29 @@
+services:
+  kasm:
+    image: lscr.io/linuxserver/kasm:latest
+    container_name: kasm
+    privileged: true
+    security_opt:
+      - apparmor:rootlesskit #optional
+    environment:
+      - KASM_PORT=8443
+      - DOCKER_HUB_USERNAME=fidays #optional
+      - DOCKER_HUB_PASSWORD=Thunderdr@g37 #optional
+      - DOCKER_MTU=1500 #optional
+      - PUBLIC_URL=https://kasm.dragnet.in
+    volumes:
+      - ./data:/opt
+      - ./profiles:/profiles #optional
+      - /dev/input:/dev/input #optional
+      - /run/udev/data:/run/udev/data #optional
+    ports:
+      - 3001:3000
+      - 8443:8443
+    restart: unless-stopped
+    networks:
+      - frontend
+networks:
+  backend:
+    external: true
+  frontend:
+    external: true

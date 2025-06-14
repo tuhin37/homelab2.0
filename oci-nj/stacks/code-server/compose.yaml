@@ -1,0 +1,24 @@
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Kolkata
+      - PASSWORD=ZdHvTrnBn2nYY37qZEBKAo6QP8fi3U4g4qzQNfziKMPti23PJ78AhN8KnBxWPqm4 #optional
+      - HASHED_PASSWORD= #optional
+      - SUDO_PASSWORD=Thunderdrag
+      - SUDO_PASSWORD_HASH= #optional
+      - PROXY_DOMAIN=code.dragnet.in #optional
+      - DEFAULT_WORKSPACE=/config/drag-codespace #optional
+    volumes:
+      - ./config:/config
+    ports:
+      - 9443:8443
+    restart: unless-stopped
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true

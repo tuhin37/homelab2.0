@@ -1,0 +1,21 @@
+version: "3"
+networks:
+  backend:
+    external: true
+  frontend:
+    external: true
+services:
+  loki:
+    container_name: loki
+    volumes:
+      - ./config:/mnt/config # Existing config volume
+      - ./loki-volume:/mnt/loki # Bind mount to store logs
+      - ./retention:/mnt/loki/retention # Bind mount for retention
+    ports:
+      - 3100:3100
+    image: grafana/loki:3.0.0
+    command: --config.file=/mnt/config/loki-config.yaml
+    restart: unless-stopped
+    networks:
+      - frontend
+      - backend

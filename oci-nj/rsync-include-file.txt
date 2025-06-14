@@ -1,0 +1,25 @@
++ cadvisor/
++ cadvisor/**
++ duplicati/
++ duplicati/**
++ code-server/
++ code-server/compose.yaml
++ grafana/
++ grafana/compose.yaml
++ grafana/grafana.ini
++ kasm-workspace/
++ kasm-workspace/compose.yaml
++ loki/
++ loki/compose.yaml
++ npm/
++ npm/compose.yaml
++ pihole/
++ pihole/compose.yaml
++ prometheus/
++ prometheus/compose.yaml
++ prometheus/prometheus.yml
++ prometheus/hosts
++ promtail/
++ promtail/**
+- *
+

@@ -1,0 +1,129 @@
+# my global config
+global:
+  scrape_interval: 15s
+  evaluation_interval: 30s
+  body_size_limit: 100MB
+  sample_limit: 50000
+  target_limit: 30
+  label_limit: 50
+  label_name_length_limit: 200
+  label_value_length_limit: 400
+
+#scrape_configs:
+
+#  - job_name: "node-exporters"
+#    scrape_interval: 15s
+#    sample_limit: 100000
+
+#    static_configs:
+#      - targets: ["10.0.0.20:9100"]
+#      - targets: ["10.0.0.25:9100"]
+#      - targets: ["10.0.0.47:9100"]
+#      - targets: ["10.0.0.45:9100"]
+#      - targets: ["10.0.0.46:9100"]
+
+scrape_configs:
+
+  - job_name: 'node-exporters'
+    scrape_interval: 15s
+    sample_limit: 100000
+    static_configs:
+      - targets:
+          - 'jerry-1.netbird.cloud:9100'
+        labels:
+          hostname: 'jerry'
+      - targets:
+          - 'beast.netbird.cloud:9100'
+        labels:
+          hostname: 'beast'
+      - targets:
+          - 'oci-nj.dragnet.in:39100' # FRP
+        labels:
+          hostname: 'neutron'
+      - targets:
+          - 'proton.netbird.cloud:9100'
+        labels:
+          hostname: 'proton'
+      - targets:
+          - 'electron.netbird.cloud:9100'
+        labels:
+          hostname: 'electron'
+      - targets:
+          - 'oci-personal.dragnet.in:9100'
+        labels:
+          hostname: 'oci-tuhin'
+      - targets:
+          - 'oci-ruhi.dragnet.in:9100'
+        labels:
+          hostname: 'oci-ruhi'
+      - targets:
+          - 'oci-vashi.dragnet.in:9100'
+        labels:
+          hostname: 'oci-vashi'
+      - targets:
+          - 'oci-nj.dragnet.in:9100'
+        labels:
+          hostname: 'oci-nj'
+
+
+  # ----------------------------
+  # your cAdvisor / Docker Zoo
+  # ----------------------------
+#  - job_name: "ca-oci-tuhin"
+#    scrape_interval: 15s
+#    scrape_timeout: 10s
+#    static_configs:
+#      - targets: ["oci-personal.dragnet.in:9200"]
+#
+#  - job_name: "ca-oci-ruhi"
+#    scrape_interval: 15s
+#    scrape_timeout: 10s
+#    static_configs:
+#      - targets: ["oci-ruhi.dragnet.in:9200"]
+
+
+  - job_name: "cAdvisors"
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    label_value_length_limit: 800  # set higher limit on label value length
+    static_configs:
+      - targets:
+          - "oci-personal.dragnet.in:9200"
+        labels:
+          hostname: "oci-tuhin"
+      - targets:
+          - "oci-ruhi.dragnet.in:9200"
+        labels:
+          hostname: "oci-ruhi"
+      - targets:
+          - "oci-nj.dragnet.in:9200"
+        labels:
+          hostname: "oci-nj"
+      - targets:
+          - "oci-vashi.dragnet.in:9200"
+        labels:
+          hostname: "oci-vashi"
+      - targets:
+          - "jerry-1.netbird.cloud:9200"
+        labels:
+          hostname: "jerry"
+      - targets:
+          - "beast.netbird.cloud:9200"
+        labels:
+          hostname: "beast"
+      - targets:
+          - "oci-nj.dragnet.in:39200" # FRP
+        labels:
+          hostname: "neutron"
+
+
+# ------------- crowdsec ---------------
+
+  - job_name: "crowdsec-oci-vashi"
+    scrape_interval: 15s
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - "oci-vashi.dragnet.in:6060"
+        labels:
+          machine: "oci-vashi"

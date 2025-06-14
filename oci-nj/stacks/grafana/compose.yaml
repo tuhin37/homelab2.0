@@ -1,0 +1,19 @@
+version: "3.3"
+services:
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    environment:
+      - GF_SERVER_ROOT_URL=http://10.0.0.47:3000/
+      - GF_INSTALL_PLUGINS=grafana-clock-panel
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana-volume:/var/lib/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini:ro
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true
