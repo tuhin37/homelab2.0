@@ -1,0 +1,8 @@
+# test account (no access)
+drag:$6$4hTElUi3RbD8GdH+$ofuo6EsU1NcNtp67vNqfjAyBxwEZg1Q2Sr8QMjGL/X+UFG5ZV170WAdXRpvvmRtLEXqOz0Z497Hs5U75iDy26Q==
+# smocket-admin (full access)
+smocket-admin:$6$4ekocdW+Tqmpt3+a$yjhsNd9jovk8UbQri2MGmGiytKJvWW+NqUghO9uHTtBGJgk+yu0NGOAfNeUmFhCzfQQOZsW8ZeQgVpcyr5r+ZQ==
+# smocket-backend (limited access)
+sn-backend:$6$VJn+tfdZUx+zy51/$pFugoGNZHpQX990YEZg0lT72uBbfUF77X6pALPnu0rSS3TGlTSAHQtPSbNwipZ0CZ/sR4pTV118s03ihilN+0g==
+# sn-node (very limited access, all the nodes mfg and managed by sourcenode, not IoT modules)
+sn-node:$6$nww8bQ92iGaVWYIV$u4FfYc6qtdUebwJfX18O1p2GpCqpKCTbbznZfAO/hQ9Iix4mmYC4rtU3iTs2L4NeN0uU6WxEhWiPbZi0zPVbhQ==

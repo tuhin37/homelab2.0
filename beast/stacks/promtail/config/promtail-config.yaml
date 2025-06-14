@@ -17,8 +17,6 @@ clients:
 
 
 
-
-
 scrape_configs:
   - job_name: docker-logs
     docker_sd_configs:

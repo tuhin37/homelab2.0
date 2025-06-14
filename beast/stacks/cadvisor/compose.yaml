@@ -1,3 +1,4 @@
+version: "3.8" # Specify the version of the Docker Compose file format
 services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.49.1 # Use the latest release version
@@ -21,4 +22,3 @@ networks:
     external: true
   backend:
     external: true
-
