@@ -1,0 +1,22 @@
+version: "3.3"
+services:
+  komga:
+    image: gotson/komga
+    container_name: komga
+    volumes:
+      - ./config:/config
+      - ./data:/data
+      - ./comics:/books
+    ports:
+      - 25600:25600
+    user: 1001:1001
+    environment:
+      - TZ=Asia/Kolkata
+    restart: unless-stopped
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true

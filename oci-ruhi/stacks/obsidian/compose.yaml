@@ -1,0 +1,28 @@
+services:
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:latest
+    container_name: obsidian
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Kolkata
+      - CUSTOM_USER=drag
+      - PASSWORD=3b92^XeSt5hbq2q@^Ft4pJi^8Ke&3*PRopPPk38@
+      - DISABLE_SSL=true
+    volumes:
+      - ./config:/config
+      - ./vaults:/vaults
+    ports:
+      - 3000:3000
+      - 3001:3001
+    devices:
+      - /dev/dri:/dev/dri #optional
+    shm_size: 1gb
+    networks:
+      - frontend
+    restart: unless-stopped
+networks:
+  frontend:
+    external: true

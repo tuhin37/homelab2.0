@@ -1,0 +1,51 @@
+version: "3.4"
+services:
+  broker:
+    image: docker.io/library/redis:7
+    restart: unless-stopped
+    volumes:
+      - ./redis-volume:/data
+    networks:
+      - backend
+  db:
+    image: docker.io/library/postgres:16
+    restart: unless-stopped
+    volumes:
+      - ./pg-volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: paperless
+    networks:
+      - backend
+  paperless:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+    ports:
+      - 8030:8000
+    volumes:
+      - ./scanned-docs/data:/usr/src/paperless/data
+      - ./scanned-docs/media:/usr/src/paperless/media
+      - ./scanned-docs/export:/usr/src/paperless/export
+      - ./scanned-docs/consume:/usr/src/paperless/consume
+    env_file: docker-compose.env
+    environment:
+      PAPERLESS_ADMIN_USER: drag
+      PAPERLESS_ADMIN_PASSWORD: SC3gN8CZF4qUpNN8xRFUBvQvphVvYSqjFuMbTvMs
+      PAPERLESS_ADMIN_EMAIL: tuhin3737@gmail.com
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBHOST: db
+      PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
+      PAPERLESS_ALLOWED_HOSTS: paperless.dragnet.in,140.245.27.167,10.0.0.25
+      PAPERLESS_CSRF_TRUSTED_ORIGINS: https://paperless.dragnet.in
+    networks:
+      - frontend
+      - backend
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true

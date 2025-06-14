@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+  mysql:
+    image: mariadb:11.5.2
+    container_name: mysql
+    environment:
+      MYSQL_USER: drag
+      MYSQL_PASSWORD: vJKNLaVKjubifqcU4YWkszPadDpu3Ce3qR3C2L2l
+      MYSQL_DATABASE: expense-manager
+      MYSQL_ROOT_PASSWORD: SakqzvpGkEAFuG3vWry5ATxHEykorx68xLBwMXX8
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    networks:
+      - backend
+  sqlpad:
+    image: sqlpad/sqlpad:latest
+    restart: always
+    ports:
+      - 3030:3000
+    environment:
+      # email address to grant initial admin rights
+      SQLPAD_ADMIN: admin@yourdomain.com
+      # password for that email on first startup
+      SQLPAD_ADMIN_PASSWORD: YourSecurePassword
+      SQLPAD_CONNECTIONS: '[{"name":"Postgres","driver":"postgres","host":"db","database":"postgres"}]'
+    networks:
+      - backend
+      - frontend
+    depends_on:
+      - mysql
+networks:
+  backend:
+    external: true
+  frontend:
+    external: true
