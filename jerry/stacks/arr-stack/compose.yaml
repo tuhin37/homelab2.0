@@ -80,6 +80,21 @@ services:
     restart: unless-stopped
     networks:
       - frontend
+  whisparr:
+    image: ghcr.io/thespad/whisparr:latest
+    container_name: whisparr
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./whisparr:/config
+      - ./whisparr-downloads:/downloads
+    ports:
+      - 6969:6969
+    restart: unless-stopped
+    networks:
+      - frontend
   mylar3:
     image: lscr.io/linuxserver/mylar3:latest
     container_name: mylar3
