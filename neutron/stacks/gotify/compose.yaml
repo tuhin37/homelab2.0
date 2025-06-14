@@ -1,0 +1,19 @@
+version: "3.3"
+services:
+  gotify:
+    image: gotify/server
+    container_name: gotify
+    ports:
+      - 8900:80
+    volumes:
+      - ./gotify-data:/app/data
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - TZ=Asia/Kolkata
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true

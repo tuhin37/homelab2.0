@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  cronicle:
+    image: bluet/cronicle-docker:latest
+    container_name: cronicle
+    hostname: cronicle
+    privileged: true
+    environment:
+      - TZ=Asia/Kolkata
+      # - CRONICLE_base_app_url=http://cronicle/
+    ports:
+      - 3012:3012
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./cronicle-data:/opt/cronicle/data
+      - ./cronicle-logs:/opt/cronicle/logs
+      - ./cronicle-plugins:/opt/cronicle/plugins
+      - ./cronicle-app:/app
+      - /usr/bin/docker:/usr/bin/docker
+    restart: unless-stopped
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true

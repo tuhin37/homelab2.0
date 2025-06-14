@@ -1,0 +1,29 @@
+1QLite format 3@  .0:
+ v�9
+    v�  itableclientsclientsCREATE TABLE clients (
+            id  INTEGER NOT NULL UNIQUE,
+            name    TEXT NOT NULL,
+            server_id   INTEGER NOT NULL,
+            subjects    TEXT NOT NULL,
+            info        INTEGER NOT NULL,
+            ping        INTEGER NOT NULL,
+            pong        INTEGER NOT NULL,
+            ok  INTEGER NOT NULL,
+            err INTEGER NOT NULL,
+            publ        INTEGER NOT NULL,
+            sub INTEGER NOT NULL,
+            unsub       INTEGER NOT NULL,
+            connect     INTEGER NOT NULL,
+            msg INTEGER NOT NULL,
+            FOREIGN KEY(server_id) REFERENCES servers(id),
+            PRIMARY KEY(id)
+        )-Andexsqlite_autoindex_clients_1clientP++Ytablesqlite_sequencesqlite_sequenceCREATE TABLE sqlite_sequence(name,seq)�r;tableserversserversCREATE TABLE servers (
+                id      INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                name    TEXT NOT NULL,
+                host    TEXT NOT NULL,
+                port    INTEGER NOT NULL,
+                monitoring_port INTEGER NOT NULL,
+                subjects        TEXT NOT NULL,
+                publications    TEXT NOT NULL
+            )
+

@@ -1,0 +1,22 @@
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+services:
+  mqtt:
+    image: eclipse-mosquitto:2.0
+    container_name: mosquitto
+    restart: always
+    ports:
+      - 8883:8883
+      - 1883:1883
+    environment:
+      - PUID=0
+      - PGID=0
+    volumes:
+      - ./config:/mosquitto/config
+      - ./data:/mosquitto/data
+      - ./log:/mosquitto/log
+    networks:
+      - frontend

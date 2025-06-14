@@ -1,0 +1,26 @@
+version: "3"
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    network_mode: host
+    environment:
+      # Timezone & WEB UI password
+      TZ: Asia/Kolkata
+      WEBPASSWORD: rn7VUx79R@NBY4j8XvL%Frv^uvfedCczEUWa6iKp
+      # Tell FTL which host IP to bind to (your Pi’s LAN address)
+      ServerIP: 10.0.0.47
+      # dnsmasq should listen on all interfaces
+      DNSMASQ_LISTENING: all
+      # Override the default web-server port (container binds to host port)
+      WEB_PORT: "8080"
+      # (Optionally) specify custom upstream resolvers at startup
+      # DNS1: "172.19.0.11#5053"
+      # DNS2: "1.1.1.1"
+    volumes:
+      - ./etc-pihole:/etc/pihole
+      - ./etc-dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN # only needed if you enable Pi-hole’s DHCP server
+    restart: unless-stopped
+networks: {}
