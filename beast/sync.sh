@@ -2,13 +2,18 @@
 
 set -e
 
-# Constants
+# =====================
+# Configurable Host Name
+DOCKER_HOST_NAME="beast"
+# =====================
+
+# Derived Paths
 SRC_DIR="/opt/stacks/"
-DEST_DIR="/opt/homelab2.0/beast/stacks/"
-INCLUDE_FILE="/opt/homelab2.0/beast/rsync-include-file.txt"
 GIT_ROOT="/opt/homelab2.0"
+DEST_DIR="$GIT_ROOT/$DOCKER_HOST_NAME/stacks/"
+INCLUDE_FILE="$GIT_ROOT/$DOCKER_HOST_NAME/rsync-include-file.txt"
 LOKI_URL="http://10.0.0.25:3100/loki/api/v1/push"
-LABELS='{ "job": "homelab2.0-sync-beast" }'
+LABELS="{ \"job\": \"homelab2.0-sync-$DOCKER_HOST_NAME\" }"
 
 # Capture current IST timestamp
 IST_TIME=$(TZ=Asia/Kolkata date "+%Y-%m-%d %H:%M:%S IST")
@@ -19,7 +24,7 @@ log() {
     LOG_BUFFER+="$1"$'\n'
 }
 
-log "[+] [$IST_TIME] Starting sync..."
+log "[+] [$IST_TIME] [$DOCKER_HOST_NAME] Starting sync..."
 
 # Rsync operation
 RSYNC_OUTPUT=$(/usr/bin/rsync -av --delete --include-from="$INCLUDE_FILE" "$SRC_DIR" "$DEST_DIR" 2>&1)
@@ -28,15 +33,19 @@ log "$RSYNC_OUTPUT"
 
 # Git operations
 cd "$GIT_ROOT"
-if [[ -n $(git status --porcelain) ]]; then
-    log "[+] Changes detected. Committing to Git..."
-    git add .
-    COMMIT_MSG="Auto-sync: Rsynced changes at $IST_TIME"
+
+log "[+] Pulling latest changes from origin..."
+git pull --rebase || log "[!] Warning: git pull failed or conflicted"
+
+if [[ -n $(git status --porcelain "$DOCKER_HOST_NAME/") ]]; then
+    log "[+] Changes detected in $DOCKER_HOST_NAME/. Committing to Git..."
+    git add "$DOCKER_HOST_NAME/"
+    COMMIT_MSG="[$DOCKER_HOST_NAME] Auto-sync: Rsynced changes at $IST_TIME"
     git commit -m "$COMMIT_MSG"
     git push
     log "[✓] Git commit and push done: $COMMIT_MSG"
 else
-    log "[✓] No Git changes to commit."
+    log "[✓] No Git changes to commit in $DOCKER_HOST_NAME/."
 fi
 
 # Push logs to Loki
@@ -59,4 +68,4 @@ EOF
 
 curl -s -X POST -H "Content-Type: application/json" -d "$JSON_PAYLOAD" "$LOKI_URL" || log "[!] Failed to push logs to Loki."
 
-log "[✓] Script completed."
+log "[✓] [$DOCKER_HOST_NAME] Script completed."
