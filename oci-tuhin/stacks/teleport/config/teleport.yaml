@@ -1,0 +1,22 @@
+version: v3
+teleport:
+  nodename: teleport.dragnet.in
+  data_dir: /var/lib/teleport
+  log:
+    output: stderr
+    severity: INFO
+    format:
+      output: text
+#auth_service:
+#  enabled: yes
+#  listen_addr: 0.0.0.0:3025
+#  proxy_listener_mode: multiplex
+#  cluster_name: teleport.dragnet.in
+ssh_service:
+  enabled: no
+proxy_service:
+  enabled: yes
+  web_listen_addr: 0.0.0.0:3080
+  public_addr: teleport.dragnet.in
+  https_keypairs: []
+  acme: {}

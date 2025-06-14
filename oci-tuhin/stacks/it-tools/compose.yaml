@@ -1,0 +1,15 @@
+version: "3.3"
+services:
+  it-tools:
+    ports:
+      - 8070:80
+    container_name: it-tools
+    stdin_open: true
+    tty: true
+    image: corentinth/it-tools
+    restart: unless-stopped
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true

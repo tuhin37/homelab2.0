@@ -1,0 +1,22 @@
+# Give test user drag only read/write access to a topics start with  test
+user drag
+topic readwrite test/#
+
+# Allow smocket-admin user to read/write under all topics
+user smocket-admin
+topic readwrite #
+
+# Allow smocket-backend user 
+user sn-backend
+topic readwrite sn/#
+topic readwrite syscom/#
+topic read noderes/#
+topic read health/#
+
+
+# Allow jaythree read/write to anything
+user sn-node
+topic readwrite sn/#
+topic read syscom/#
+topic write noderes/#
+topic write health/#

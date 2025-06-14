@@ -1,0 +1,25 @@
+version: "3"
+services:
+  rustdesk-server:
+    container_name: rustdesk-server
+    ports:
+      - 21116:21116
+      - 21116:21116/udp
+      - 21117:21117
+      - 21118:21118
+      - 21119:21119
+    image: rustdesk/rustdesk-server-s6:latest
+    environment:
+      - RELAY=129.154.229.69:21117
+      - ENCRYPTED_ONLY=1
+      - DB_URL=/db/db_v2.sqlite3
+      - KEY_PRIV=FR2j78IxfwJNR+HjLluQ2Nh7eEryEeIZCwiQDPVe+PaITKyShphHAsPLn7So0OqRs92nGvSRdFJnE2MSyrKTIQ==
+      - KEY_PUB=iEyskoaYRwLDy5+0qNDqkbPdpxr0kXRSZxNjEsqykyE=
+    volumes:
+      - ./db:/db
+    restart: unless-stopped
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true

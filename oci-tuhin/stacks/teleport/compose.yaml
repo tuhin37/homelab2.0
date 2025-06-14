@@ -1,0 +1,17 @@
+version: "3.8" # Specify the version of the Docker Compose file format
+services:
+  teleport:
+    image: public.ecr.aws/gravitational/teleport-distroless:16.4.3 # Use the same image
+    container_name: teleport # Name of the container
+    hostname: localhost # Set the hostname
+    volumes:
+      - ./config:/etc/teleport # Map the config volume
+      - ./data:/var/lib/teleport # Map the data volume
+    ports:
+      - 3025:3025 # Map port 3025
+      - 3080:3080 # Map port 3080
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true

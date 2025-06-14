@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+  homelab-drag-functions-runner:
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=drag
+      - RABBITMQ_PASS=lTHtXK8TNyGZ9rRevwBRdxfaygV386yhEKPEAHQqtQQqy5pvysFvMWzM9eksTxxF
+      - RABBITMQ_INPUT_QUEUE=dragfunctions-input-queue
+      - RABBITMQ_EXECUTION_QUEUE=dragfunctions-execution-queue
+      - RABBITMQ_OUTPUT_QUEUE=dragfunctions-output-queue
+    image: fidays/homelab-drag-functions-runner:v0.8
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    networks:
+      - backend
+networks:
+  backend:
+    external: true

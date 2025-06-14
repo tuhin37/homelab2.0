@@ -1,0 +1,24 @@
+version: "3.8" # Specify the version of the Docker Compose file format
+services:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1 # Use the latest release version
+    container_name: cadvisor # Name of the container
+    privileged: true # Run in privileged mode
+    devices:
+      - /dev/kmsg # Device to access kernel messages
+    ports:
+      - 9200:8080 # Publish port 8080
+    volumes:
+      - /:/rootfs:ro # Mount root filesystem
+      - /var/run:/var/run:ro # Mount Docker runtime
+      - /sys:/sys:ro # Mount system directory
+      - /var/lib/docker/:/var/lib/docker:ro # Mount Docker data
+      - /dev/disk/:/dev/disk:ro # Mount disk devices
+    restart: unless-stopped
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true

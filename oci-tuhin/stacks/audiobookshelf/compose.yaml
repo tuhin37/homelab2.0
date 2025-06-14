@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    restart: unless-stopped
+    ports:
+      - 13378:80
+    volumes:
+      - /mnt/data/audiobookshelf/audio-books:/audiobooks
+      - /mnt/data/audiobookshelf/podcasts:/podcasts
+      - ./config:/config
+      - ./metadata:/metadata
+    environment:
+      - TZ=Asia/Kolkata
+    networks:
+      - frontend
+networks:
+  frontend:
+    external: true

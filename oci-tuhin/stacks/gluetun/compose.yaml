@@ -1,0 +1,66 @@
+version: "3"
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    hostname: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    stdin_open: true
+    tty: true
+    ports:
+      - 9117:9117 # Jackett
+      - 9696:9696 # Prowlarr
+      - 8191:8191 # flare-solver API
+    volumes:
+      - ./gluetun:/gluetun
+    environment:
+      # - FIREWALL_OUTBOUND_SUBNETS=10.0.0.0/24 # route trafic for this CIDR through the host and not the VPN
+      - VPN_SERVICE_PROVIDER=protonvpn
+      - OPENVPN_USER=Ekrl3gh6uIVjwNyY # from protonvpn's account
+      - OPENVPN_PASSWORD=MC9CXYlRMTKuTx6ZSTB0CPByJQZoOs9p
+      - SERVER_COUNTRIES=Netherlands
+      - TZ=Asia/Kolkata
+      - UPDATER_PERIOD=24h
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    network_mode: service:gluetun
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - AUTO_UPDATE=true #optional
+      - RUN_OPTS= #optional
+    volumes:
+      - ./jackett:/config
+      - ./jackett-blackhole:/downloads
+    restart: unless-stopped
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    network_mode: service:gluetun
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./prowlarr:/config
+    restart: unless-stopped
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    network_mode: service:gluetun
+    #ports:
+    #  - "8191:8191" # Expose FlareSolverr API port 
+    environment:
+      LOG_LEVEL: info # Verbosity: debug | info | warn | error 
+      LOG_HTML: "false" # Whether to log raw HTML (debug only) 
+      CAPTCHA_SOLVER: none # No automatic CAPTCHA solver
+      TZ: Asia/Kolkata
+      PROMETHEUS_ENABLED: "false"
+      PROMETHEUS_PORT: "8192"
+    restart: unless-stopped
+networks: {}

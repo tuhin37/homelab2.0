@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+  homelab-drag-functions-manager:
+    ports:
+      - 8080:8080
+    image: fidays/homelab-drag-functions-manager:v0.12
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=drag
+      - RABBITMQ_PASS=lTHtXK8TNyGZ9rRevwBRdxfaygV386yhEKPEAHQqtQQqy5pvysFvMWzM9eksTxxF
+      - RABBITMQ_INPUT_QUEUE=dragfunctions-input-queue
+      - RABBITMQ_EXECUTION_QUEUE=dragfunctions-execution-queue
+      - RABBITMQ_OUTPUT_QUEUE=dragfunctions-output-queue
+      - APP_PORT=8080
+    networks:
+      - backend
+networks:
+  backend:
+    external: true
