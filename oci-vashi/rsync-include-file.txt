@@ -1,0 +1,15 @@
++ cadvisor/
++ cadvisor/**
++ duplicati/
++ duplicati/**
++ jellyfin/
++ jellyfin/compose.yaml
++ navidrome/
++ navidrome/compose.yaml
++ pangolin/
++ pangolin/compose.yaml
++ promtail/
++ promtail/**
++ uptimekuma/
++ uptimekuma/compose.yaml
+- *

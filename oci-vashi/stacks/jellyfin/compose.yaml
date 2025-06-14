@@ -1,0 +1,21 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./config:/config
+      - ./cache:/cache
+      - /mnt/media/music:/music
+    ports:
+      - 8096:8096
+    restart: unless-stopped
+    networks:
+      - frontend
+
+networks:
+  frontend:
+    external: true
