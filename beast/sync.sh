@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 set -e
 
 # =====================
@@ -14,7 +13,7 @@ GIT_ROOT="/opt/homelab2.0"
 DEST_DIR="$GIT_ROOT/$DOCKER_HOST_NAME/stacks/"
 INCLUDE_FILE="$GIT_ROOT/$DOCKER_HOST_NAME/rsync-include-file.txt"
 LOKI_URL="http://10.0.0.25:3100/loki/api/v1/push"
-LABELS="{ \"job\": \"homelab2.0-sync-$DOCKER_HOST_NAME\" }"
+LABELS="{ \"job\": \"homelab2.0-sync\", \"host\": \"$DOCKER_HOST_NAME\" }"
 
 # Capture current IST timestamp
 IST_TIME=$(TZ=Asia/Kolkata date "+%Y-%m-%d %H:%M:%S IST")
