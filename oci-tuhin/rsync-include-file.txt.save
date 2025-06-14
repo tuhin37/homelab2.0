@@ -1,0 +1,38 @@
++ audiobookshelf/
++ audiobookshelf/compose.yaml
++ cadvisor/
++ cadvisor/**
++ duplicati/
++ duplicati/**
++ cronicle/
++ cronicle/compose.yaml
++ drag-functions-manager/
++ drag-functions-manager/**
++ drag-functions-runner/
++ drag-functions-runner/**
++ gluetun/
++ gluetun/compose.yaml
+
+
+
++ gotify/
++ gotify/compose.yaml
++ grafana/
++ grafana/compose.yaml
++ grafana/grafana.ini
++ homarr/
++ homarr/compose.yaml
++ mosquitto/
++ mosquitto/**
++ nats/
++ nats/**
++ pihole/
++ pihole/compose.yaml
++ prometheus/
++ prometheus/compose.yaml
++ prometheus/prometheus.yml
++ promtail/
++ promtail/*
++ uptimekuma/
++ uptimekuma/compose.yaml
+- *
