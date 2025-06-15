@@ -1,3 +1,4 @@
+version: "3"
 networks:
   frontend:
     external: true
@@ -5,16 +6,18 @@ networks:
     external: true
 services:
   mqtt:
-    image: eclipse-mosquitto:2.0
+    image: eclipse-mosquitto:2.0.18-openssl
     container_name: mosquitto
     restart: always
     ports:
       - 8883:8883
       - 1883:1883
+      - 9001:9001
     environment:
       - PUID=0
       - PGID=0
     volumes:
+      - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf
       - ./config:/mosquitto/config
       - ./data:/mosquitto/data
       - ./log:/mosquitto/log
