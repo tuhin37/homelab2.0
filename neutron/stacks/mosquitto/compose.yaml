@@ -5,8 +5,8 @@ networks:
   backend:
     external: true
 services:
-  mqtt:
-    image: eclipse-mosquitto:2.0.18-openssl
+  mosquitto:
+    image: fidays/mosquitto:2.0.17-ws
     container_name: mosquitto
     restart: always
     ports:
@@ -21,5 +21,12 @@ services:
       - ./config:/mosquitto/config
       - ./data:/mosquitto/data
       - ./log:/mosquitto/log
+    networks:
+      - frontend
+  mqttx-web:
+    container_name: mqttx-web
+    ports:
+      - 11883:80
+    image: emqx/mqttx-web
     networks:
       - frontend
